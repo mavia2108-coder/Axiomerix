@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='512' height='512' viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='512' height='512' fill='%230B0F1A'/%3E%3Ctext x='160' y='392' font-family='Georgia,serif' font-size='368' font-weight='700' fill='%2300E5C4' text-anchor='middle'%3EA%3C/text%3E%3Ctext x='356' y='392' font-family='Georgia,serif' font-size='368' font-weight='700' fill='%2300E5C4' text-anchor='middle'%3EX%3C/text%3E%3C/svg%3E"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AxioMerix — AI Automation for Real Estate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --ink: #08090d;
+  --ink2: #0d0f18;
+  --ink3: #12141f;
+  --surface: #161824;
+  --glass: rgba(22,24,36,0.6);
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --text: #f0f1f6;
+  --muted: #7a7e96;
+  --accent: #00E5C4;
+  --accent2: #6c4bff;
+  --cyan: #00E5C4;
+  --glow: rgba(0,229,196,0.18);
+  --glow2: rgba(108,75,255,0.15);
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--ink);
+  color:var(--text);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+/* ─── GLOBAL NOISE TEXTURE ─── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.5;
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--ink)}
+::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:0 5vw;
+  height:70px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(8,9,13,0.7);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:all .3s ease;
+}
+.logo{
+  font-family:'Syne',sans-serif;
+  font-weight:800;font-size:1.35rem;
+  letter-spacing:-0.02em;
+  background:linear-gradient(135deg,#fff 40%,var(--accent));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.logo span{color:var(--accent);-webkit-text-fill-color:var(--accent)}
+.nav-links{display:flex;align-items:center;gap:2rem}
+.nav-links a{
+  font-size:0.875rem;font-weight:400;
+  color:var(--muted);
+  text-decoration:none;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{
+  padding:10px 22px;
+  background:var(--accent);
+  color:#000;
+  border:none;border-radius:8px;
+  font-family:'DM Sans',sans-serif;
+  font-size:0.875rem;font-weight:600;
+  cursor:pointer;
+  text-decoration:none;
+  transition:all .2s ease;
+  box-shadow:0 0 20px rgba(0,229,196,0.3);
+}
+.nav-cta:hover{
+  background:#00f5d6;
+  transform:translateY(-1px);
+  box-shadow:0 4px 30px rgba(0,229,196,0.5);
+}
+
+/* ─── SECTIONS ─── */
+section{position:relative;z-index:1}
+
+/* ─── HERO ─── */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:120px 5vw 80px;
+  text-align:center;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(0,229,196,0.12) 0%,transparent 70%),
+             radial-gradient(ellipse 50% 40% at 80% 50%,rgba(108,75,255,0.08) 0%,transparent 60%),
+             radial-gradient(ellipse 40% 30% at 20% 70%,rgba(0,212,200,0.06) 0%,transparent 60%);
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(var(--border) 1px,transparent 1px),
+    linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 90% 80% at 50% 50%,black 0%,transparent 80%);
+  opacity:0.4;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(0,229,196,0.1);
+  border:1px solid rgba(0,229,196,0.25);
+  border-radius:100px;
+  padding:6px 16px;
+  font-size:0.78rem;font-weight:500;
+  color:var(--accent);
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  margin-bottom:28px;
+  animation:fadeUp .8s ease both;
+}
+.hero-eyebrow::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 8px var(--accent);
+  animation:pulse 2s ease infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.hero h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2.6rem,6vw,5.2rem);
+  font-weight:800;
+  line-height:1.05;
+  letter-spacing:-0.03em;
+  max-width:900px;
+  animation:fadeUp .8s .1s ease both;
+}
+.hero h1 .line2{
+  background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 50%,var(--cyan) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-sub{
+  margin:24px auto 0;
+  font-size:1.1rem;
+  font-weight:300;
+  color:var(--muted);
+  max-width:580px;
+  line-height:1.7;
+  animation:fadeUp .8s .2s ease both;
+}
+.hero-actions{
+  margin-top:44px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center;
+  animation:fadeUp .8s .3s ease both;
+}
+.btn-primary{
+  padding:15px 34px;
+  background:var(--accent);
+  color:#000;border:none;
+  border-radius:10px;
+  font-family:'DM Sans',sans-serif;
+  font-size:1rem;font-weight:600;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:all .2s ease;
+  box-shadow:0 0 30px rgba(0,229,196,0.4);
+}
+.btn-primary:hover{
+  background:#00f5d6;
+  transform:translateY(-2px);
+  box-shadow:0 8px 40px rgba(0,229,196,0.55);
+}
+.btn-ghost{
+  padding:15px 30px;
+  background:transparent;
+  color:var(--text);
+  border:1px solid var(--border2);
+  border-radius:10px;
+  font-family:'DM Sans',sans-serif;
+  font-size:1rem;font-weight:400;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:all .2s ease;
+}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.hero-trust{
+  margin-top:56px;
+  display:flex;align-items:center;gap:24px;flex-wrap:wrap;justify-content:center;
+  animation:fadeUp .8s .4s ease both;
+}
+.trust-item{
+  display:flex;align-items:center;gap:8px;
+  font-size:0.82rem;color:var(--muted);
+}
+.trust-dot{width:4px;height:4px;border-radius:50%;background:var(--muted)}
+
+/* ─── DASHBOARD MOCKUP ─── */
+.dashboard-wrap{
+  margin-top:72px;
+  position:relative;
+  width:100%;max-width:1000px;
+  animation:fadeUp .8s .5s ease both;
+}
+.dashboard-glow{
+  position:absolute;inset:-40px;
+  background:radial-gradient(ellipse 70% 50% at 50% 60%,rgba(0,229,196,0.18) 0%,transparent 70%);
+  pointer-events:none;
+}
+.dashboard{
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.04);
+}
+.dash-bar{
+  display:flex;align-items:center;gap:8px;
+  padding:14px 20px;
+  background:rgba(255,255,255,0.03);
+  border-bottom:1px solid var(--border);
+}
+.dot{width:11px;height:11px;border-radius:50%}
+.dot.r{background:#ff5f57}.dot.y{background:#febc2e}.dot.g{background:#28c840}
+.dash-title{
+  flex:1;text-align:center;
+  font-size:0.75rem;color:var(--muted);letter-spacing:0.02em;
+}
+.dash-content{display:grid;grid-template-columns:220px 1fr;min-height:400px}
+.dash-sidebar{
+  padding:20px 16px;
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;gap:4px;
+}
+.dash-nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 12px;border-radius:8px;
+  font-size:0.8rem;color:var(--muted);
+  cursor:pointer;transition:all .15s;
+}
+.dash-nav-item.active{background:rgba(0,229,196,0.15);color:#fff}
+.dash-nav-item:hover:not(.active){background:rgba(255,255,255,0.04)}
+.dash-icon{font-size:14px}
+.dash-main{padding:20px;display:flex;flex-direction:column;gap:16px}
+.dash-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.kpi-card{
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:14px;
+}
+.kpi-label{font-size:0.68rem;color:var(--muted);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:6px}
+.kpi-val{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700}
+.kpi-val.up{color:#3dff9b}
+.kpi-val.blue{color:var(--accent)}
+.kpi-badge{display:inline-block;font-size:0.62rem;background:rgba(0,229,196,0.12);color:#3dff9b;padding:2px 6px;border-radius:4px;margin-top:4px}
+.kpi-badge.warn{background:rgba(255,171,61,0.12);color:#ffab3d}
+.dash-row{display:grid;grid-template-columns:2fr 1fr;gap:10px}
+.dash-card{
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:16px;
+}
+.dash-card-label{font-size:0.7rem;color:var(--muted);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:12px}
+.pipeline-stages{display:flex;align-items:flex-end;gap:6px;height:80px}
+.bar{
+  flex:1;border-radius:4px 4px 0 0;
+  transition:height .3s ease;
+}
+.leads-list{display:flex;flex-direction:column;gap:8px}
+.lead-row{display:flex;align-items:center;gap:8px}
+.lead-avatar{
+  width:26px;height:26px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.65rem;font-weight:600;
+  flex-shrink:0;
+}
+.lead-info{flex:1}
+.lead-name{font-size:0.75rem;font-weight:500}
+.lead-stage{font-size:0.62rem;color:var(--muted)}
+.lead-score{
+  font-size:0.68rem;font-weight:600;
+  padding:2px 7px;border-radius:4px;
+}
+/* Floating property cards */
+.float-cards{
+  position:absolute;
+  right:-40px;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:12px;
+  pointer-events:none;
+}
+.prop-card{
+  background:rgba(22,24,36,0.92);
+  border:1px solid var(--border2);
+  border-radius:12px;
+  padding:12px 16px;
+  width:200px;
+  backdrop-filter:blur(20px);
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+.prop-tag{
+  font-size:0.6rem;color:var(--accent);
+  letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px;
+}
+.prop-name{font-size:0.8rem;font-weight:500;margin-bottom:2px}
+.prop-detail{font-size:0.7rem;color:var(--muted)}
+.prop-status{
+  display:inline-block;margin-top:6px;
+  font-size:0.62rem;padding:3px 8px;border-radius:4px;
+}
+.status-matched{background:rgba(0,229,196,0.12);color:#3dff9b}
+.status-follow{background:rgba(0,229,196,0.12);color:var(--accent)}
+
+/* ─── STATS BAND ─── */
+.stats{
+  padding:60px 5vw;
+  background:var(--ink2);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.stats-inner{
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+}
+.stat-item{
+  padding:20px 30px;
+  border-right:1px solid var(--border);
+}
+.stat-item:last-child{border-right:none}
+.stat-num{
+  font-family:'Syne',sans-serif;
+  font-size:2.4rem;font-weight:800;
+  background:linear-gradient(135deg,var(--text),var(--muted));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.stat-num span{color:var(--accent);-webkit-text-fill-color:var(--accent)}
+.stat-label{font-size:0.85rem;color:var(--muted);margin-top:4px}
+
+/* ─── PROBLEM/SOLUTION ─── */
+.problem{
+  padding:100px 5vw;
+  max-width:1200px;margin:0 auto;
+}
+.section-eyebrow{
+  font-size:0.75rem;font-weight:500;
+  color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;
+  margin-bottom:16px;
+}
+.section-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2rem,4vw,3rem);
+  font-weight:700;
+  line-height:1.15;
+  letter-spacing:-0.025em;
+  margin-bottom:16px;
+}
+.section-sub{
+  font-size:1rem;color:var(--muted);line-height:1.7;max-width:560px;
+}
+.problem-grid{
+  margin-top:64px;
+  display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;
+}
+.problem-list{display:flex;flex-direction:column;gap:20px}
+.problem-item{
+  display:flex;align-items:flex-start;gap:16px;
+  padding:20px;
+  background:rgba(255,255,255,0.02);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  transition:all .2s;
+  cursor:default;
+}
+.problem-item:hover{
+  border-color:rgba(255,80,80,0.2);
+  background:rgba(255,80,80,0.04);
+}
+.problem-icon{
+  width:40px;height:40px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;
+  background:rgba(255,80,80,0.1);
+}
+.problem-text h4{font-size:0.9rem;font-weight:500;margin-bottom:4px}
+.problem-text p{font-size:0.82rem;color:var(--muted);line-height:1.6}
+.solution-side{display:flex;flex-direction:column;gap:16px}
+.solution-card{
+  padding:24px;
+  background:var(--glass);
+  border:1px solid var(--border2);
+  border-radius:var(--radius);
+  backdrop-filter:blur(20px);
+  position:relative;overflow:hidden;
+  transition:all .25s ease;
+}
+.solution-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  opacity:0.6;
+}
+.solution-card:hover{transform:translateY(-3px);border-color:rgba(0,229,196,0.25)}
+.solution-label{
+  font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:10px;
+}
+.solution-card h3{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;margin-bottom:6px}
+.solution-card p{font-size:0.82rem;color:var(--muted);line-height:1.6}
+.solution-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:12px;padding:5px 12px;
+  background:rgba(0,229,196,0.1);border:1px solid rgba(0,229,196,0.2);
+  border-radius:100px;
+  font-size:0.7rem;color:#3dff9b;font-weight:500;
+}
+.solution-badge::before{content:'↑';font-size:0.8em}
+
+/* ─── SERVICES ─── */
+.services{
+  padding:100px 5vw;
+  background:var(--ink2);
+}
+.services-inner{max-width:1200px;margin:0 auto}
+.services-header{text-align:center;margin-bottom:60px}
+.services-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.service-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:28px;
+  position:relative;overflow:hidden;
+  transition:all .25s ease;
+  cursor:default;
+}
+.service-card::after{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(0,229,196,0.08),transparent 60%);
+  opacity:0;transition:opacity .3s;
+  pointer-events:none;
+}
+.service-card:hover{
+  border-color:var(--border2);
+  transform:translateY(-4px);
+  box-shadow:0 20px 50px rgba(0,0,0,0.3);
+}
+.service-card:hover::after{opacity:1}
+.service-num{
+  font-family:'Syne',sans-serif;
+  font-size:0.7rem;color:var(--muted);
+  letter-spacing:0.1em;margin-bottom:16px;
+}
+.service-icon-wrap{
+  width:48px;height:48px;
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;
+  margin-bottom:16px;
+}
+.service-card h3{
+  font-family:'Syne',sans-serif;
+  font-size:1rem;font-weight:700;margin-bottom:8px;
+}
+.service-card p{font-size:0.82rem;color:var(--muted);line-height:1.65}
+.service-pill{
+  display:inline-block;margin-top:16px;
+  font-size:0.68rem;padding:4px 10px;
+  background:rgba(0,229,196,0.1);border:1px solid rgba(0,229,196,0.2);
+  border-radius:4px;color:var(--accent);
+}
+/* Service card accent colours */
+.sc-blue .service-icon-wrap{background:rgba(0,229,196,0.12)}
+.sc-purple .service-icon-wrap{background:rgba(108,75,255,0.12)}
+.sc-cyan .service-icon-wrap{background:rgba(0,212,200,0.12)}
+.sc-green .service-icon-wrap{background:rgba(0,229,196,0.12)}
+.sc-amber .service-icon-wrap{background:rgba(255,171,61,0.12)}
+.sc-pink .service-icon-wrap{background:rgba(255,75,120,0.12)}
+
+/* ─── WORKFLOW ─── */
+.workflow{
+  padding:100px 5vw;
+  max-width:1200px;margin:0 auto;
+}
+.workflow-header{text-align:center;margin-bottom:72px}
+.pipeline{
+  display:flex;align-items:stretch;gap:0;
+  overflow:hidden;border-radius:var(--radius);
+  border:1px solid var(--border);
+}
+.pipeline-step{
+  flex:1;
+  padding:32px 24px;
+  position:relative;
+  background:var(--surface);
+  border-right:1px solid var(--border);
+  transition:all .25s;
+}
+.pipeline-step:last-child{border-right:none}
+.pipeline-step:hover{background:rgba(0,229,196,0.05)}
+.step-num{
+  font-family:'Syne',sans-serif;
+  font-size:2.5rem;font-weight:800;
+  color:rgba(255,255,255,0.05);
+  position:absolute;top:16px;right:16px;
+  line-height:1;
+}
+.step-icon{font-size:28px;margin-bottom:12px}
+.step-label{
+  font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:8px;
+}
+.pipeline-step h3{
+  font-family:'Syne',sans-serif;
+  font-size:0.95rem;font-weight:700;margin-bottom:8px;
+}
+.pipeline-step p{font-size:0.78rem;color:var(--muted);line-height:1.6}
+.step-arrow{
+  position:absolute;right:-14px;top:50%;transform:translateY(-50%);
+  width:28px;height:28px;border-radius:50%;
+  background:var(--ink);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:var(--accent);z-index:2;
+}
+.pipeline-step:last-child .step-arrow{display:none}
+
+/* ─── WHO IT'S FOR ─── */
+.audience{
+  padding:100px 5vw;
+  background:var(--ink2);
+}
+.audience-inner{max-width:1200px;margin:0 auto}
+.audience-header{text-align:center;margin-bottom:60px}
+.audience-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.audience-card{
+  padding:36px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  position:relative;overflow:hidden;
+  transition:all .25s;
+}
+.audience-card::before{
+  content:'';
+  position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent2),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.audience-card:hover{transform:translateY(-4px);border-color:var(--border2)}
+.audience-card:hover::before{opacity:0.8}
+.audience-avatar{font-size:36px;margin-bottom:16px}
+.audience-card h3{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:10px}
+.audience-card > p{font-size:0.85rem;color:var(--muted);line-height:1.7;margin-bottom:20px}
+.feature-list{display:flex;flex-direction:column;gap:8px}
+.feature-item{
+  display:flex;align-items:center;gap:8px;
+  font-size:0.8rem;color:var(--muted);
+}
+.feature-item::before{
+  content:'';
+  width:5px;height:5px;border-radius:50%;
+  background:var(--accent);flex-shrink:0;
+}
+
+/* ─── RESULTS / CASE STUDIES ─── */
+.results{padding:100px 5vw;max-width:1200px;margin:0 auto}
+.results-header{text-align:center;margin-bottom:64px}
+.results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.result-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+  transition:all .25s;
+}
+.result-card:hover{transform:translateY(-4px);border-color:var(--border2);box-shadow:0 20px 50px rgba(0,0,0,0.3)}
+.result-header{
+  padding:24px;
+  background:rgba(255,255,255,0.02);
+  border-bottom:1px solid var(--border);
+}
+.result-company{font-size:0.68rem;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px}
+.result-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700}
+.result-body{padding:24px;display:flex;flex-direction:column;gap:16px}
+.metric-row{
+  display:flex;justify-content:space-between;
+  padding:12px 0;
+  border-bottom:1px solid var(--border);
+}
+.metric-row:last-child{border-bottom:none}
+.metric-before{text-align:left}
+.metric-after{text-align:right}
+.metric-label{font-size:0.65rem;color:var(--muted);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:4px}
+.metric-val{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700}
+.metric-val.old{color:var(--muted);text-decoration:line-through}
+.metric-val.new{color:#3dff9b}
+.metric-arrow{
+  align-self:center;
+  font-size:1.2rem;color:var(--accent);
+}
+.result-quote{
+  font-size:0.8rem;font-style:italic;
+  color:var(--muted);line-height:1.7;
+  padding:16px;
+  background:rgba(0,229,196,0.05);
+  border-left:2px solid var(--accent);
+  border-radius:0 8px 8px 0;
+}
+
+/* ─── CTA ─── */
+.cta-section{
+  padding:100px 5vw;
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.cta-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(0,229,196,0.1) 0%,transparent 70%);
+}
+.cta-inner{position:relative;z-index:1;max-width:700px;margin:0 auto}
+.cta-section h2{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:800;letter-spacing:-0.025em;
+  line-height:1.1;margin-bottom:16px;
+}
+.cta-section p{font-size:1rem;color:var(--muted);line-height:1.7;margin-bottom:40px}
+.cta-btns{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+.calendar-widget{
+  margin-top:56px;
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:var(--radius);
+  padding:32px;
+  text-align:left;
+  position:relative;
+}
+.calendar-header{
+  display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;
+}
+.cal-month{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700}
+.cal-nav{display:flex;gap:8px}
+.cal-btn{
+  width:32px;height:32px;border-radius:8px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--border);
+  color:var(--muted);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;transition:all .15s;
+}
+.cal-btn:hover{background:rgba(0,229,196,0.1);color:var(--accent);border-color:var(--accent)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal-day-label{font-size:0.65rem;color:var(--muted);text-align:center;padding:4px;letter-spacing:0.05em}
+.cal-day{
+  height:38px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.82rem;color:var(--muted);
+  cursor:pointer;transition:all .15s;
+}
+.cal-day:hover{background:rgba(0,229,196,0.1);color:var(--text)}
+.cal-day.available{color:var(--text);background:rgba(255,255,255,0.04)}
+.cal-day.selected{background:var(--accent);color:#fff;font-weight:500}
+.cal-day.disabled{opacity:0.3;cursor:default;pointer-events:none}
+.time-slots{
+  margin-top:20px;
+  display:flex;gap:8px;flex-wrap:wrap;
+}
+.time-slot{
+  padding:8px 16px;border-radius:8px;
+  background:rgba(255,255,255,0.04);border:1px solid var(--border);
+  font-size:0.8rem;color:var(--muted);cursor:pointer;transition:all .15s;
+}
+.time-slot:hover{border-color:var(--accent);color:var(--accent)}
+.time-slot.selected{background:rgba(0,229,196,0.15);border-color:var(--accent);color:var(--accent)}
+.confirm-btn{
+  margin-top:24px;
+  width:100%;padding:14px;
+  background:var(--accent);color:#000;border:none;
+  border-radius:10px;font-family:'DM Sans',sans-serif;
+  font-size:0.9rem;font-weight:600;cursor:pointer;
+  transition:all .2s;
+  box-shadow:0 0 24px rgba(0,229,196,0.3);
+}
+.confirm-btn:hover{background:#00f5d6;transform:translateY(-1px)}
+
+/* ─── FOOTER ─── */
+footer{
+  padding:60px 5vw 40px;
+  background:var(--ink);
+  border-top:1px solid var(--border);
+}
+.footer-inner{
+  max-width:1200px;margin:0 auto;
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;
+  margin-bottom:48px;
+}
+.footer-brand .logo{font-size:1.2rem;margin-bottom:12px;display:block}
+.footer-brand p{font-size:0.82rem;color:var(--muted);line-height:1.7;max-width:280px}
+.footer-col h4{font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text);margin-bottom:16px}
+.footer-col a{display:block;font-size:0.82rem;color:var(--muted);text-decoration:none;margin-bottom:8px;transition:color .15s}
+.footer-col a:hover{color:var(--text)}
+.footer-bottom{
+  padding-top:24px;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:0.78rem;color:var(--muted);
+}
+.footer-badges{display:flex;gap:12px}
+.footer-badge{
+  padding:4px 10px;border-radius:4px;
+  background:rgba(255,255,255,0.04);border:1px solid var(--border);
+  font-size:0.68rem;color:var(--muted);
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+}
+@keyframes scanline{
+  from{transform:translateY(0)}
+  to{transform:translateY(400px)}
+}
+.float-anim{animation:float 4s ease-in-out infinite}
+
+/* ─── SCROLL REVEAL ─── */
+.reveal{
+  opacity:0;transform:translateY(30px);
+  transition:opacity .7s ease, transform .7s ease;
+}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ─── MOBILE ─── */
+@media(max-width:900px){
+  .nav-links{display:none}
+  .dash-content{grid-template-columns:1fr}
+  .dash-sidebar{display:none}
+  .dash-kpis{grid-template-columns:repeat(2,1fr)}
+  .stats-inner{grid-template-columns:repeat(2,1fr)}
+  .stat-item:nth-child(2){border-right:none}
+  .problem-grid,.dash-row{grid-template-columns:1fr}
+  .services-grid{grid-template-columns:repeat(2,1fr)}
+  .audience-grid,.results-grid{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr 1fr}
+  .pipeline{flex-direction:column}
+  .pipeline-step{border-right:none;border-bottom:1px solid var(--border)}
+  .step-arrow{display:none}
+  .float-cards{display:none}
+}
+@media(max-width:600px){
+  .services-grid{grid-template-columns:1fr}
+  .dash-kpis{grid-template-columns:1fr 1fr}
+  .footer-inner{grid-template-columns:1fr}
+  .stats-inner{grid-template-columns:1fr}
+  .stat-item{border-right:none;border-bottom:1px solid var(--border)}
+}
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="nav">
+  <a href="#" style="display:flex;align-items:center;text-decoration:none">
+    <svg width="180" height="36" viewBox="0 0 600 120" xmlns="http://www.w3.org/2000/svg">
+      <text x="52" y="98" font-family="Georgia,serif" font-size="96" font-weight="700" fill="#00E5C4" text-anchor="middle">A</text>
+      <text x="120" y="98" font-family="Georgia,serif" font-size="96" font-weight="700" fill="#00E5C4" text-anchor="middle">X</text>
+      <line x1="162" y1="18" x2="162" y2="98" stroke="#00E5C4" stroke-width="0.6" opacity="0.35"/>
+      <text x="182" y="62" font-family="Georgia,serif" font-size="34" font-weight="700" fill="#00E5C4" text-anchor="start" letter-spacing="6">AXIOMERIX</text>
+      <text x="184" y="88" font-family="Arial,sans-serif" font-size="12" font-weight="300" fill="#00E5C4" text-anchor="start" letter-spacing="5" opacity="0.5">AI AUTOMATION AGENCY</text>
+    </svg>
+  </a>
+  <div class="nav-links">
+    <a href="#solutions">Solutions</a>
+    <a href="#who">Who It's For</a>
+    <a href="#results">Results</a>
+    <a href="#demo">Pricing</a>
+  </div>
+  <a href="https://calendly.com/axiomerix" target="_blank" class="nav-cta">Book a Demo</a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  
+  <div class="hero-eyebrow">AI Automation for Real Estate</div>
+  
+  <h1>
+    Stop Chasing Leads.<br>
+    <span class="line2">Let AI Close Them For You.</span>
+  </h1>
+  
+  <p class="hero-sub">AxioMerix automates your entire lead pipeline — from first inquiry to signed deal — so your agents focus on what actually matters: closing.</p>
+  
+  <div class="hero-actions">
+    <a href="https://calendly.com/axiomerix" target="_blank" class="btn-primary">
+      <span>Book a Free Demo</span>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <a href="#solutions" class="btn-ghost">See How It Works</a>
+  </div>
+  
+  <div class="hero-trust">
+    <div class="trust-item">✦ No setup fee</div>
+    <div class="trust-dot"></div>
+    <div class="trust-item">Live in 14 days</div>
+    <div class="trust-dot"></div>
+    <div class="trust-item">Real estate-specific AI</div>
+    <div class="trust-dot"></div>
+    <div class="trust-item">Replaces 3 FTEs on average</div>
+  </div>
+
+  <!-- DASHBOARD MOCKUP -->
+  <div class="dashboard-wrap">
+    <div class="dashboard-glow"></div>
+    <div class="dashboard float-anim">
+      <div class="dash-bar">
+        <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+        <div class="dash-title">AxioMerix — Real Estate AI Command Center</div>
+      </div>
+      <div class="dash-content">
+        <div class="dash-sidebar">
+          <div class="dash-nav-item active"><span class="dash-icon">◉</span> Overview</div>
+          <div class="dash-nav-item"><span class="dash-icon">◈</span> Lead Pipeline</div>
+          <div class="dash-nav-item"><span class="dash-icon">◇</span> AI Chatbots</div>
+          <div class="dash-nav-item"><span class="dash-icon">◆</span> Voice Agents</div>
+          <div class="dash-nav-item"><span class="dash-icon">○</span> CRM Sync</div>
+          <div class="dash-nav-item"><span class="dash-icon">□</span> Automations</div>
+          <div class="dash-nav-item"><span class="dash-icon">△</span> Reports</div>
+        </div>
+        <div class="dash-main">
+          <div class="dash-kpis">
+            <div class="kpi-card">
+              <div class="kpi-label">New Leads Today</div>
+              <div class="kpi-val blue">47</div>
+              <div class="kpi-badge">↑ 23% vs yesterday</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">AI Qualified</div>
+              <div class="kpi-val up">31</div>
+              <div class="kpi-badge">↑ 66% qual. rate</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Demos Booked</div>
+              <div class="kpi-val blue">12</div>
+              <div class="kpi-badge warn">▸ 4 today</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Revenue Pipeline</div>
+              <div class="kpi-val up">$284k</div>
+              <div class="kpi-badge">↑ Active deals</div>
+            </div>
+          </div>
+          <div class="dash-row">
+            <div class="dash-card">
+              <div class="dash-card-label">Lead Pipeline — Last 7 Days</div>
+              <div class="pipeline-stages">
+                <div class="bar" style="height:45%;background:rgba(0,229,196,0.3);border:1px solid rgba(0,229,196,0.4)"></div>
+                <div class="bar" style="height:70%;background:rgba(0,229,196,0.4);border:1px solid rgba(0,229,196,0.5)"></div>
+                <div class="bar" style="height:55%;background:rgba(0,229,196,0.35)"></div>
+                <div class="bar" style="height:80%;background:rgba(0,229,196,0.5)"></div>
+                <div class="bar" style="height:65%;background:rgba(0,229,196,0.4)"></div>
+                <div class="bar" style="height:90%;background:rgba(0,229,196,0.6)"></div>
+                <div class="bar" style="height:75%;background:rgba(0,229,196,0.5)"></div>
+              </div>
+            </div>
+            <div class="dash-card">
+              <div class="dash-card-label">Hot Leads</div>
+              <div class="leads-list">
+                <div class="lead-row">
+                  <div class="lead-avatar" style="background:rgba(0,229,196,0.15);color:var(--accent)">JM</div>
+                  <div class="lead-info">
+                    <div class="lead-name">James Morrison</div>
+                    <div class="lead-stage">Viewing scheduled</div>
+                  </div>
+                  <div class="lead-score" style="background:rgba(0,229,196,0.12);color:#3dff9b">92</div>
+                </div>
+                <div class="lead-row">
+                  <div class="lead-avatar" style="background:rgba(108,75,255,0.15);color:var(--accent2)">SL</div>
+                  <div class="lead-info">
+                    <div class="lead-name">Sara Lin</div>
+                    <div class="lead-stage">AI follow-up sent</div>
+                  </div>
+                  <div class="lead-score" style="background:rgba(0,229,196,0.12);color:#3dff9b">87</div>
+                </div>
+                <div class="lead-row">
+                  <div class="lead-avatar" style="background:rgba(0,212,200,0.15);color:var(--cyan)">AK</div>
+                  <div class="lead-info">
+                    <div class="lead-name">Ahmed K.</div>
+                    <div class="lead-stage">Property matched</div>
+                  </div>
+                  <div class="lead-score" style="background:rgba(255,171,61,0.12);color:#ffab3d">74</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── STATS ─── -->
+<div class="stats reveal">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-num"><span>3.4</span>x</div>
+      <div class="stat-label">More qualified leads per month</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span>67</span>%</div>
+      <div class="stat-label">Reduction in manual follow-ups</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span>14</span> days</div>
+      <div class="stat-label">Average time to go live</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span>$0</span></div>
+      <div class="stat-label">Setup or onboarding fee</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── PROBLEM / SOLUTION ─── -->
+<section id="solutions" class="problem">
+  <div class="problem-grid reveal">
+    <div>
+      <div class="section-eyebrow">The Reality</div>
+      <h2 class="section-title">Your pipeline is leaking deals — and you don't even know it.</h2>
+      <p class="section-sub">Real estate teams lose 78% of leads to slow follow-ups, missed calls, and unqualified time-wasters. AxioMerix closes every gap.</p>
+      <div class="problem-list" style="margin-top:36px">
+        <div class="problem-item">
+          <div class="problem-icon">⚡</div>
+          <div class="problem-text">
+            <h4>Leads go cold in under 5 minutes</h4>
+            <p>Buyers expect instant responses. Manual follow-up is too slow — and they're already talking to your competitor.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <div class="problem-icon">🕐</div>
+          <div class="problem-text">
+            <h4>Agents waste 60% of time on unqualified leads</h4>
+            <p>Your best closers are spending hours on tire-kickers instead of hot buyers. That's revenue bleeding out daily.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <div class="problem-icon">🔁</div>
+          <div class="problem-text">
+            <h4>Follow-up sequences die after 2 touchpoints</h4>
+            <p>Most deals close at 5–12 touchpoints. Without automation, you stop at 2 — and leave money on the table.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="solution-side">
+      <div class="solution-card">
+        <div class="solution-label">Solution 01</div>
+        <h3>Instant AI Response, 24/7</h3>
+        <p>Our AI chatbot and voice agents respond to every lead in under 30 seconds — qualifying, answering questions, and booking viewings automatically.</p>
+        <div class="solution-badge">Response rate up 340%</div>
+      </div>
+      <div class="solution-card">
+        <div class="solution-label">Solution 02</div>
+        <h3>Smart Lead Scoring & Routing</h3>
+        <p>Every lead is scored by buying intent, budget, and timeline. Hot leads go straight to your best closer. Cold leads get nurtured by AI until they're ready.</p>
+        <div class="solution-badge">Agent productivity up 2.8x</div>
+      </div>
+      <div class="solution-card">
+        <div class="solution-label">Solution 03</div>
+        <h3>12-Touch Nurture on Autopilot</h3>
+        <p>Intelligent email, SMS, and voice follow-up sequences that adapt based on behaviour. Never lose a lead to silence again.</p>
+        <div class="solution-badge">Deal close rate up 57%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SERVICES GRID ─── -->
+<section class="services">
+  <div class="services-inner">
+    <div class="services-header reveal">
+      <div class="section-eyebrow">What We Build</div>
+      <h2 class="section-title">Every automation your agency needs.</h2>
+      <p class="section-sub" style="margin:0 auto">Purpose-built AI systems for real estate — not generic tools stitched together.</p>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-card sc-blue" onmousemove="cardGlow(event,this)">
+        <div class="service-num">01</div>
+        <div class="service-icon-wrap">🤖</div>
+        <h3>AI Chatbot</h3>
+        <p>Answers property queries, qualifies buyers, and books viewings 24/7. Integrates with your website and WhatsApp in days.</p>
+        <div class="service-pill">Live in 48 hrs</div>
+      </div>
+      <div class="service-card sc-purple" onmousemove="cardGlow(event,this)">
+        <div class="service-num">02</div>
+        <div class="service-icon-wrap">🎙️</div>
+        <h3>AI Voice Agent</h3>
+        <p>Handles inbound and outbound calls with human-like voice AI. Qualifies leads, answers questions, and transfers hot prospects to your team.</p>
+        <div class="service-pill">Natural conversation</div>
+      </div>
+      <div class="service-card sc-cyan" onmousemove="cardGlow(event,this)">
+        <div class="service-num">03</div>
+        <div class="service-icon-wrap">🔗</div>
+        <h3>CRM Automation</h3>
+        <p>Auto-updates your CRM on every interaction. No manual data entry. Every lead, note, and stage change synced automatically.</p>
+        <div class="service-pill">Works with your CRM</div>
+      </div>
+      <div class="service-card sc-green" onmousemove="cardGlow(event,this)">
+        <div class="service-num">04</div>
+        <div class="service-icon-wrap">📅</div>
+        <h3>Calendar Automation</h3>
+        <p>Leads self-book viewings and calls based on agent availability. Automated reminders cut no-shows by over 60%.</p>
+        <div class="service-pill">Zero scheduling calls</div>
+      </div>
+      <div class="service-card sc-amber" onmousemove="cardGlow(event,this)">
+        <div class="service-num">05</div>
+        <div class="service-icon-wrap">📧</div>
+        <h3>Email Sequences</h3>
+        <p>Hyper-personalised drip campaigns triggered by behaviour. Property alerts, market updates, and follow-ups — all automated.</p>
+        <div class="service-pill">AI-personalised</div>
+      </div>
+      <div class="service-card sc-pink" onmousemove="cardGlow(event,this)">
+        <div class="service-num">06</div>
+        <div class="service-icon-wrap">🏠</div>
+        <h3>Property Matching AI</h3>
+        <p>Matches every buyer to the most relevant listings based on their preferences, behaviour, and search history. Automatically.</p>
+        <div class="service-pill">Higher intent leads</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WORKFLOW PIPELINE ─── -->
+<section class="workflow">
+  <div class="workflow-header reveal">
+    <div class="section-eyebrow">How It Works</div>
+    <h2 class="section-title">From unknown visitor to closed deal.<br>On autopilot.</h2>
+  </div>
+  <div class="pipeline reveal">
+    <div class="pipeline-step">
+      <div class="step-num">01</div>
+      <div class="step-icon">🎯</div>
+      <div class="step-label">Capture</div>
+      <h3>Lead Enters</h3>
+      <p>Via website chat, WhatsApp, Facebook ad, or phone call — AI greets and engages instantly.</p>
+      <div class="step-arrow">›</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">02</div>
+      <div class="step-icon">🧠</div>
+      <div class="step-label">Qualify</div>
+      <h3>AI Qualifies</h3>
+      <p>Budget, timeline, and intent captured through natural conversation. Lead score assigned automatically.</p>
+      <div class="step-arrow">›</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">03</div>
+      <div class="step-icon">🏡</div>
+      <div class="step-label">Match</div>
+      <h3>Properties Matched</h3>
+      <p>AI identifies and sends the most relevant listings. Buyer engagement tracked in real-time.</p>
+      <div class="step-arrow">›</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">04</div>
+      <div class="step-icon">📅</div>
+      <div class="step-label">Book</div>
+      <h3>Viewing Booked</h3>
+      <p>Lead self-books the viewing or call. Reminder sequence fires automatically.</p>
+      <div class="step-arrow">›</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">05</div>
+      <div class="step-icon">🤝</div>
+      <div class="step-label">Close</div>
+      <h3>Agent Closes</h3>
+      <p>Your agent receives a fully-briefed, hot lead. Full context, history, and AI insights in the CRM.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WHO IT'S FOR ─── -->
+<section id="who" class="audience">
+  <div class="audience-inner">
+    <div class="audience-header reveal">
+      <div class="section-eyebrow">Who It's For</div>
+      <h2 class="section-title">Built specifically for your role.</h2>
+      <p class="section-sub" style="margin:0 auto">AxioMerix isn't a generic tool. Every workflow is tailored to how real estate professionals actually work.</p>
+    </div>
+    <div class="audience-grid reveal">
+      <div class="audience-card">
+        <div class="audience-avatar">🏢</div>
+        <h3>Real Estate Agencies</h3>
+        <p>Scale your lead volume without scaling headcount. AxioMerix handles the entire top-of-funnel — qualification, follow-up, booking — so your agents only work hot leads.</p>
+        <div class="feature-list">
+          <div class="feature-item">Multi-agent lead routing and assignment</div>
+          <div class="feature-item">Unified lead dashboard across all portals</div>
+          <div class="feature-item">Automated response to every portal enquiry</div>
+          <div class="feature-item">Performance reporting per agent</div>
+        </div>
+      </div>
+      <div class="audience-card">
+        <div class="audience-avatar">👔</div>
+        <h3>Independent Realtors</h3>
+        <p>You're a one-person business competing against big agencies. AxioMerix gives you the same 24/7 response capability and nurture sequences as a team of 10.</p>
+        <div class="feature-list">
+          <div class="feature-item">Personal AI assistant that never sleeps</div>
+          <div class="feature-item">Automated follow-ups while you're at viewings</div>
+          <div class="feature-item">Smart calendar booking with reminders</div>
+          <div class="feature-item">Professional email sequences on autopilot</div>
+        </div>
+      </div>
+      <div class="audience-card">
+        <div class="audience-avatar">🏗️</div>
+        <h3>Property Developers</h3>
+        <p>Launching a new development? AxioMerix manages your entire buyer pipeline — from first interest through to reservation — keeping prospects warm until launch day.</p>
+        <div class="feature-list">
+          <div class="feature-item">Pre-launch interest capture and nurture</div>
+          <div class="feature-item">Unit availability and pricing automation</div>
+          <div class="feature-item">Automated buyer milestone communications</div>
+          <div class="feature-item">Reservation and document workflow</div>
+        </div>
+      </div>
+      <div class="audience-card">
+        <div class="audience-avatar">🔑</div>
+        <h3>Property Managers</h3>
+        <p>Automate tenant communications, maintenance requests, and rental renewals. Reduce admin hours by 70% and keep tenants happy with instant AI responses.</p>
+        <div class="feature-list">
+          <div class="feature-item">24/7 AI tenant query handling</div>
+          <div class="feature-item">Automated maintenance request triage</div>
+          <div class="feature-item">Rental renewal reminder sequences</div>
+          <div class="feature-item">New tenant onboarding automation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── RESULTS / CASE STUDIES ─── -->
+<section id="results" class="results">
+  <div class="results-header reveal">
+    <div class="section-eyebrow">Real Results</div>
+    <h2 class="section-title">The numbers don't lie.</h2>
+    <p class="section-sub" style="margin:0 auto">Results from real AxioMerix clients within the first 90 days of going live.</p>
+  </div>
+  <div class="results-grid reveal">
+    <div class="result-card">
+      <div class="result-header">
+        <div class="result-company">Mid-size Agency · Dubai</div>
+        <div class="result-name">Landmark Properties</div>
+      </div>
+      <div class="result-body">
+        <div class="metric-row">
+          <div class="metric-before">
+            <div class="metric-label">Monthly Leads</div>
+            <div class="metric-val old">210</div>
+          </div>
+          <div class="metric-arrow">→</div>
+          <div class="metric-after">
+            <div class="metric-label">After AxioMerix</div>
+            <div class="metric-val new">714</div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-before">
+            <div class="metric-label">Response Time</div>
+            <div class="metric-val old">4.2 hrs</div>
+          </div>
+          <div class="metric-arrow">→</div>
+          <div class="metric-after">
+            <div class="metric-label">After</div>
+            <div class="metric-val new">28 sec</div>
+          </div>
+        </div>
+        <div class="result-quote">"We went from missing half our leads to having our pipeline completely full. The AI genuinely sounds like one of our team."</div>
+      </div>
+    </div>
+    <div class="result-card">
+      <div class="result-header">
+        <div class="result-company">Solo Realtor · London</div>
+        <div class="result-name">Sarah Mitchell</div>
+      </div>
+      <div class="result-body">
+        <div class="metric-row">
+          <div class="metric-before">
+            <div class="metric-label">Weekly Admin Hrs</div>
+            <div class="metric-val old">22 hrs</div>
+          </div>
+          <div class="metric-arrow">→</div>
+          <div class="metric-after">
+            <div class="metric-label">After AxioMerix</div>
+            <div class="metric-val new">6 hrs</div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-before">
+            <div class="metric-label">Deals Closed/Month</div>
+            <div class="metric-val old">3</div>
+          </div>
+          <div class="metric-arrow">→</div>
+          <div class="metric-after">
+            <div class="metric-label">After</div>
+            <div class="metric-val new">7</div>
+          </div>
+        </div>
+        <div class="result-quote">"I was sceptical about AI for a personal business. Now I honestly couldn't run my pipeline without it. It's like having a full-time assistant."</div>
+      </div>
+    </div>
+    <div class="result-card">
+      <div class="result-header">
+        <div class="result-company">Property Developer · Lagos</div>
+        <div class="result-name">Skyline Group</div>
+      </div>
+      <div class="result-body">
+        <div class="metric-row">
+          <div class="metric-before">
+            <div class="metric-label">Pre-launch Interest</div>
+            <div class="metric-val old">180 leads</div>
+          </div>
+          <div class="metric-arrow">→</div>
+          <div class="metric-after">
+            <div class="metric-label">Reservations</div>
+            <div class="metric-val new">94 units</div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-before">
+            <div class="metric-label">Manual outreach</div>
+            <div class="metric-val old">8 staff</div>
+          </div>
+          <div class="metric-arrow">→</div>
+          <div class="metric-after">
+            <div class="metric-label">After</div>
+            <div class="metric-val new">2 staff</div>
+          </div>
+        </div>
+        <div class="result-quote">"AxioMerix managed our entire pre-launch campaign. 52% of interested buyers converted to reservations. Our previous record was 18%."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA / DEMO ─── -->
+<section id="demo" class="cta-section">
+  <div class="cta-bg"></div>
+  <div class="cta-inner reveal">
+    <div class="section-eyebrow" style="display:inline-block">Book Your Demo</div>
+    <h2>See AxioMerix<br>in action — live.</h2>
+    <p>A 30-minute demo tailored to your business. We'll show you exactly what your automated pipeline would look like — and what it'd cost you not to have it.</p>
+    <div class="cta-btns">
+      <a href="https://calendly.com/axiomerix" target="_blank" class="btn-primary">
+        <span>Book Free Consultation</span>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="mailto:hello@axiomerix.com" class="btn-ghost">Email Us First</a>
+    </div>
+
+    <!-- CALENDLY EMBED -->
+    <div id="calendar" style="margin-top:48px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border2);box-shadow:0 20px 60px rgba(0,0,0,0.4)">
+      <div style="background:var(--surface);padding:20px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:0.68rem;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px">Free · 30 Minutes</div>
+          <div style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700">Book Your Free Consultation</div>
+        </div>
+        <a href="https://calendly.com/axiomerix" target="_blank" class="btn-primary" style="padding:10px 22px;font-size:0.85rem">
+          Open Calendly →
+        </a>
+      </div>
+      <!-- Calendly inline widget -->
+      <div class="calendly-inline-widget" data-url="https://calendly.com/axiomerix?hide_gdpr_banner=1&background_color=161824&text_color=f0f1f6&primary_color=00E5C4" style="min-width:320px;height:700px;"></div>
+      <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#" style="display:inline-flex;align-items:center;text-decoration:none;margin-bottom:12px">
+        <svg width="150" height="30" viewBox="0 0 600 120" xmlns="http://www.w3.org/2000/svg">
+          <text x="52" y="98" font-family="Georgia,serif" font-size="96" font-weight="700" fill="#00E5C4" text-anchor="middle">A</text>
+          <text x="120" y="98" font-family="Georgia,serif" font-size="96" font-weight="700" fill="#00E5C4" text-anchor="middle">X</text>
+          <line x1="162" y1="18" x2="162" y2="98" stroke="#00E5C4" stroke-width="0.6" opacity="0.35"/>
+          <text x="182" y="62" font-family="Georgia,serif" font-size="34" font-weight="700" fill="#00E5C4" text-anchor="start" letter-spacing="6">AXIOMERIX</text>
+          <text x="184" y="88" font-family="Arial,sans-serif" font-size="12" font-weight="300" fill="#00E5C4" text-anchor="start" letter-spacing="5" opacity="0.5">AI AUTOMATION AGENCY</text>
+        </svg>
+      </a>
+      <p>AI automation systems purpose-built for real estate businesses. More leads, fewer hours, better results.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Solutions</h4>
+      <a href="#">AI Chatbot</a>
+      <a href="#">Voice Agent</a>
+      <a href="#">CRM Automation</a>
+      <a href="#">Lead Generation</a>
+      <a href="#">Property Matching</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About Us</a>
+      <a href="#">Case Studies</a>
+      <a href="#">Blog</a>
+      <a href="#">Careers</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Get Started</h4>
+      <a href="https://calendly.com/axiomerix" target="_blank">Book a Demo</a>
+      <a href="https://calendly.com/axiomerix" target="_blank">Free Consultation</a>
+      <a href="#">FAQ</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2025 AxioMerix. All rights reserved.</div>
+    <div class="footer-badges">
+      <div class="footer-badge">SOC 2 Type II</div>
+      <div class="footer-badge">GDPR Compliant</div>
+      <div class="footer-badge">256-bit Encrypted</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ─── SCROLL REVEAL ─── */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) { e.target.classList.add('visible'); }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* ─── NAV SCROLL ─── */
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('nav');
+  if(window.scrollY > 60) {
+    nav.style.background = 'rgba(8,9,13,0.95)';
+  } else {
+    nav.style.background = 'rgba(8,9,13,0.7)';
+  }
+});
+
+/* ─── CARD GLOW ─── */
+function cardGlow(e, card) {
+  const rect = card.getBoundingClientRect();
+  const x = ((e.clientX - rect.left) / rect.width) * 100;
+  const y = ((e.clientY - rect.top) / rect.height) * 100;
+  card.style.setProperty('--mx', x + '%');
+  card.style.setProperty('--my', y + '%');
+}
+
+/* ─── CALENDAR ─── */
+const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+let currentMonth = 4; // May (0-indexed)
+let currentYear = 2025;
+let selectedDay = null;
+let selectedTime = null;
+
+function renderCalendar() {
+  const grid = document.getElementById('calGrid');
+  const labels = ['Mo','Tu','We','Th','Fr','Sa','Su'];
+  let html = labels.map(l => `<div class="cal-day-label">${l}</div>`).join('');
+  
+  const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+  const offset = firstDay === 0 ? 6 : firstDay - 1;
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  const today = new Date();
+  
+  for(let i = 0; i < offset; i++) html += '<div class="cal-day disabled"></div>';
+  for(let d = 1; d <= daysInMonth; d++) {
+    const date = new Date(currentYear, currentMonth, d);
+    const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+    const isPast = date < today && date.toDateString() !== today.toDateString();
+    const isSelected = selectedDay === d;
+    const cls = isPast || isWeekend ? 'disabled' : isSelected ? 'selected' : 'available';
+    const click = (!isPast && !isWeekend) ? `onclick="selectDay(${d})"` : '';
+    html += `<div class="cal-day ${cls}" ${click}>${d}</div>`;
+  }
+  grid.innerHTML = html;
+  document.querySelector('.cal-month').textContent = months[currentMonth] + ' ' + currentYear;
+}
+
+function selectDay(d) {
+  selectedDay = d;
+  selectedTime = null;
+  document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+  renderCalendar();
+  document.getElementById('timeSlots').style.display = 'flex';
+  updateConfirm();
+}
+
+function selectTime(el) {
+  document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedTime = el.textContent;
+  updateConfirm();
+}
+
+function updateConfirm() {
+  const btn = document.getElementById('confirmBtn');
+  if(selectedDay && selectedTime) {
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    btn.textContent = `Confirm: ${months[currentMonth]} ${selectedDay}, ${selectedTime}`;
+  } else if(selectedDay) {
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
+    btn.textContent = 'Now select a time';
+  } else {
+    btn.disabled = true;
+    btn.style.opacity = '0.4';
+    btn.textContent = 'Select a date and time';
+  }
+}
+
+function prevMonth() {
+  if(currentMonth === 0) { currentMonth = 11; currentYear--; }
+  else currentMonth--;
+  selectedDay = null; selectedTime = null;
+  document.getElementById('timeSlots').style.display = 'none';
+  renderCalendar();
+}
+function nextMonth() {
+  if(currentMonth === 11) { currentMonth = 0; currentYear++; }
+  else currentMonth++;
+  selectedDay = null; selectedTime = null;
+  document.getElementById('timeSlots').style.display = 'none';
+  renderCalendar();
+}
+
+function confirmBooking() {
+  if(!selectedDay || !selectedTime) return;
+  const btn = document.getElementById('confirmBtn');
+  btn.textContent = '✓ Demo Confirmed! Check your email for details.';
+  btn.style.background = '#1a8a4a';
+  btn.style.boxShadow = '0 0 24px rgba(26,138,74,0.4)';
+  btn.disabled = true;
+}
+
+renderCalendar();
+
+/* ─── ANIMATED BARS ─── */
+setTimeout(() => {
+  document.querySelectorAll('.bar').forEach((bar, i) => {
+    const heights = [45,70,55,80,65,90,75];
+    bar.style.height = heights[i % heights.length] + '%';
+  });
+}, 1000);
+</script>
+</body>
+</html>
