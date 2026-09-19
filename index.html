@@ -823,7 +823,7 @@ footer{
   </div>
   
   <div class="hero-trust">
-    <div class="trust-item">✦ No setup fee</div>
+    <div class="trust-item">✦ One-time setup fee</div>
     <div class="trust-dot"></div>
     <div class="trust-item">Live in 14 days</div>
     <div class="trust-dot"></div>
@@ -842,80 +842,163 @@ footer{
       </div>
       <div class="dash-content">
         <div class="dash-sidebar">
-          <div class="dash-nav-item active"><span class="dash-icon">◉</span> Overview</div>
-          <div class="dash-nav-item"><span class="dash-icon">◈</span> Lead Pipeline</div>
-          <div class="dash-nav-item"><span class="dash-icon">◇</span> AI Chatbots</div>
-          <div class="dash-nav-item"><span class="dash-icon">◆</span> Voice Agents</div>
-          <div class="dash-nav-item"><span class="dash-icon">○</span> CRM Sync</div>
-          <div class="dash-nav-item"><span class="dash-icon">□</span> Automations</div>
-          <div class="dash-nav-item"><span class="dash-icon">△</span> Reports</div>
+          <div class="dash-nav-item active" id="dnav-overview" onclick="switchDashTab('overview')"><span class="dash-icon">◉</span> Overview</div>
+          <div class="dash-nav-item" id="dnav-pipeline" onclick="switchDashTab('pipeline')"><span class="dash-icon">◈</span> Lead Pipeline</div>
+          <div class="dash-nav-item" id="dnav-chatbots" onclick="switchDashTab('chatbots')"><span class="dash-icon">◇</span> AI Chatbots</div>
+          <div class="dash-nav-item" id="dnav-voice" onclick="switchDashTab('voice')"><span class="dash-icon">◆</span> Voice Agents</div>
+          <div class="dash-nav-item" id="dnav-crm" onclick="switchDashTab('crm')"><span class="dash-icon">○</span> CRM Sync</div>
+          <div class="dash-nav-item" id="dnav-automations" onclick="switchDashTab('automations')"><span class="dash-icon">□</span> Automations</div>
+          <div class="dash-nav-item" id="dnav-reports" onclick="switchDashTab('reports')"><span class="dash-icon">△</span> Reports</div>
         </div>
         <div class="dash-main">
-          <div class="dash-kpis">
-            <div class="kpi-card">
-              <div class="kpi-label">New Leads Today</div>
-              <div class="kpi-val blue">47</div>
-              <div class="kpi-badge">↑ 23% vs yesterday</div>
+
+          <!-- TAB: OVERVIEW -->
+          <div id="dtab-overview">
+            <div class="dash-kpis">
+              <div class="kpi-card"><div class="kpi-label">New Leads Today</div><div class="kpi-val blue">47</div><div class="kpi-badge">↑ 23% vs yesterday</div></div>
+              <div class="kpi-card"><div class="kpi-label">AI Qualified</div><div class="kpi-val up">31</div><div class="kpi-badge">↑ 66% qual. rate</div></div>
+              <div class="kpi-card"><div class="kpi-label">Demos Booked</div><div class="kpi-val blue">12</div><div class="kpi-badge warn">▸ 4 today</div></div>
+              <div class="kpi-card"><div class="kpi-label">Revenue Pipeline</div><div class="kpi-val up">$284k</div><div class="kpi-badge">↑ Active deals</div></div>
             </div>
-            <div class="kpi-card">
-              <div class="kpi-label">AI Qualified</div>
-              <div class="kpi-val up">31</div>
-              <div class="kpi-badge">↑ 66% qual. rate</div>
-            </div>
-            <div class="kpi-card">
-              <div class="kpi-label">Demos Booked</div>
-              <div class="kpi-val blue">12</div>
-              <div class="kpi-badge warn">▸ 4 today</div>
-            </div>
-            <div class="kpi-card">
-              <div class="kpi-label">Revenue Pipeline</div>
-              <div class="kpi-val up">$284k</div>
-              <div class="kpi-badge">↑ Active deals</div>
-            </div>
-          </div>
-          <div class="dash-row">
-            <div class="dash-card">
-              <div class="dash-card-label">Lead Pipeline — Last 7 Days</div>
-              <div class="pipeline-stages">
-                <div class="bar" style="height:45%;background:rgba(0,229,196,0.3);border:1px solid rgba(0,229,196,0.4)"></div>
-                <div class="bar" style="height:70%;background:rgba(0,229,196,0.4);border:1px solid rgba(0,229,196,0.5)"></div>
-                <div class="bar" style="height:55%;background:rgba(0,229,196,0.35)"></div>
-                <div class="bar" style="height:80%;background:rgba(0,229,196,0.5)"></div>
-                <div class="bar" style="height:65%;background:rgba(0,229,196,0.4)"></div>
-                <div class="bar" style="height:90%;background:rgba(0,229,196,0.6)"></div>
-                <div class="bar" style="height:75%;background:rgba(0,229,196,0.5)"></div>
+            <div class="dash-row">
+              <div class="dash-card">
+                <div class="dash-card-label">Lead Pipeline — Last 7 Days</div>
+                <div class="pipeline-stages">
+                  <div class="bar" style="height:45%;background:rgba(0,229,196,0.3);border:1px solid rgba(0,229,196,0.4)"></div>
+                  <div class="bar" style="height:70%;background:rgba(0,229,196,0.4)"></div>
+                  <div class="bar" style="height:55%;background:rgba(0,229,196,0.35)"></div>
+                  <div class="bar" style="height:80%;background:rgba(0,229,196,0.5)"></div>
+                  <div class="bar" style="height:65%;background:rgba(0,229,196,0.4)"></div>
+                  <div class="bar" style="height:90%;background:rgba(0,229,196,0.6)"></div>
+                  <div class="bar" style="height:75%;background:rgba(0,229,196,0.5)"></div>
+                </div>
               </div>
-            </div>
-            <div class="dash-card">
-              <div class="dash-card-label">Hot Leads</div>
-              <div class="leads-list">
-                <div class="lead-row">
-                  <div class="lead-avatar" style="background:rgba(0,229,196,0.15);color:var(--accent)">JM</div>
-                  <div class="lead-info">
-                    <div class="lead-name">James Morrison</div>
-                    <div class="lead-stage">Viewing scheduled</div>
-                  </div>
-                  <div class="lead-score" style="background:rgba(0,229,196,0.12);color:#3dff9b">92</div>
-                </div>
-                <div class="lead-row">
-                  <div class="lead-avatar" style="background:rgba(108,75,255,0.15);color:var(--accent2)">SL</div>
-                  <div class="lead-info">
-                    <div class="lead-name">Sara Lin</div>
-                    <div class="lead-stage">AI follow-up sent</div>
-                  </div>
-                  <div class="lead-score" style="background:rgba(0,229,196,0.12);color:#3dff9b">87</div>
-                </div>
-                <div class="lead-row">
-                  <div class="lead-avatar" style="background:rgba(0,212,200,0.15);color:var(--cyan)">AK</div>
-                  <div class="lead-info">
-                    <div class="lead-name">Ahmed K.</div>
-                    <div class="lead-stage">Property matched</div>
-                  </div>
-                  <div class="lead-score" style="background:rgba(255,171,61,0.12);color:#ffab3d">74</div>
+              <div class="dash-card">
+                <div class="dash-card-label">Hot Leads</div>
+                <div class="leads-list">
+                  <div class="lead-row"><div class="lead-avatar" style="background:rgba(0,229,196,0.15);color:var(--accent)">JM</div><div class="lead-info"><div class="lead-name">James Morrison</div><div class="lead-stage">Viewing scheduled</div></div><div class="lead-score" style="background:rgba(0,229,196,0.12);color:#3dff9b">92</div></div>
+                  <div class="lead-row"><div class="lead-avatar" style="background:rgba(108,75,255,0.15);color:var(--accent2)">SL</div><div class="lead-info"><div class="lead-name">Sara Lin</div><div class="lead-stage">AI follow-up sent</div></div><div class="lead-score" style="background:rgba(0,229,196,0.12);color:#3dff9b">87</div></div>
+                  <div class="lead-row"><div class="lead-avatar" style="background:rgba(0,212,200,0.15);color:var(--cyan)">AK</div><div class="lead-info"><div class="lead-name">Ahmed K.</div><div class="lead-stage">Property matched</div></div><div class="lead-score" style="background:rgba(255,171,61,0.12);color:#ffab3d">74</div></div>
                 </div>
               </div>
             </div>
           </div>
+
+          <!-- TAB: LEAD PIPELINE -->
+          <div id="dtab-pipeline" style="display:none">
+            <div class="dash-kpis">
+              <div class="kpi-card"><div class="kpi-label">Total Leads</div><div class="kpi-val blue">312</div><div class="kpi-badge">↑ This month</div></div>
+              <div class="kpi-card"><div class="kpi-label">Qualified</div><div class="kpi-val up">198</div><div class="kpi-badge">63% rate</div></div>
+              <div class="kpi-card"><div class="kpi-label">In Nurture</div><div class="kpi-val blue">87</div><div class="kpi-badge warn">Auto-sequence on</div></div>
+              <div class="kpi-card"><div class="kpi-label">Closed Won</div><div class="kpi-val up">27</div><div class="kpi-badge">↑ 8.6% CVR</div></div>
+            </div>
+            <div class="dash-card" style="margin-top:0">
+              <div class="dash-card-label">Pipeline Stages</div>
+              <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
+                <div style="display:flex;align-items:center;gap:12px"><div style="font-size:0.75rem;color:var(--muted);width:100px">New Inquiry</div><div style="flex:1;background:rgba(255,255,255,0.05);border-radius:4px;height:8px"><div style="width:100%;height:100%;background:var(--accent);border-radius:4px;opacity:0.7"></div></div><div style="font-size:0.75rem;color:var(--text);width:30px;text-align:right">312</div></div>
+                <div style="display:flex;align-items:center;gap:12px"><div style="font-size:0.75rem;color:var(--muted);width:100px">AI Qualified</div><div style="flex:1;background:rgba(255,255,255,0.05);border-radius:4px;height:8px"><div style="width:63%;height:100%;background:var(--accent);border-radius:4px;opacity:0.8"></div></div><div style="font-size:0.75rem;color:var(--text);width:30px;text-align:right">198</div></div>
+                <div style="display:flex;align-items:center;gap:12px"><div style="font-size:0.75rem;color:var(--muted);width:100px">Viewing Done</div><div style="flex:1;background:rgba(255,255,255,0.05);border-radius:4px;height:8px"><div style="width:38%;height:100%;background:var(--accent);border-radius:4px;opacity:0.9"></div></div><div style="font-size:0.75rem;color:var(--text);width:30px;text-align:right">119</div></div>
+                <div style="display:flex;align-items:center;gap:12px"><div style="font-size:0.75rem;color:var(--muted);width:100px">Offer Made</div><div style="flex:1;background:rgba(255,255,255,0.05);border-radius:4px;height:8px"><div style="width:18%;height:100%;background:#3dff9b;border-radius:4px"></div></div><div style="font-size:0.75rem;color:var(--text);width:30px;text-align:right">56</div></div>
+                <div style="display:flex;align-items:center;gap:12px"><div style="font-size:0.75rem;color:var(--muted);width:100px">Closed Won</div><div style="flex:1;background:rgba(255,255,255,0.05);border-radius:4px;height:8px"><div style="width:8.6%;height:100%;background:#3dff9b;border-radius:4px"></div></div><div style="font-size:0.75rem;color:#3dff9b;width:30px;text-align:right">27</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB: AI CHATBOTS -->
+          <div id="dtab-chatbots" style="display:none">
+            <div class="dash-kpis">
+              <div class="kpi-card"><div class="kpi-label">Conversations Today</div><div class="kpi-val blue">143</div><div class="kpi-badge">↑ 24hr active</div></div>
+              <div class="kpi-card"><div class="kpi-label">Avg Response</div><div class="kpi-val up">18s</div><div class="kpi-badge">↑ Under 30s</div></div>
+              <div class="kpi-card"><div class="kpi-label">Leads Captured</div><div class="kpi-val blue">47</div><div class="kpi-badge">33% of chats</div></div>
+              <div class="kpi-card"><div class="kpi-label">Human Handoffs</div><div class="kpi-val up">12</div><div class="kpi-badge warn">Hot leads only</div></div>
+            </div>
+            <div class="dash-card" style="margin-top:0">
+              <div class="dash-card-label">Recent Chatbot Conversations</div>
+              <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:8px;background:rgba(0,229,196,0.05);border-radius:8px;border:1px solid rgba(0,229,196,0.1)"><span style="font-size:0.78rem">Sarah T. — "Looking for 3BR under $500k"</span><span style="font-size:0.68rem;color:#3dff9b;background:rgba(61,255,155,0.1);padding:2px 8px;border-radius:4px">Qualified ✓</span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:8px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid var(--border)"><span style="font-size:0.78rem">Anon — "What areas do you cover?"</span><span style="font-size:0.68rem;color:var(--muted);background:rgba(255,255,255,0.05);padding:2px 8px;border-radius:4px">Browsing</span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:8px;background:rgba(0,229,196,0.05);border-radius:8px;border:1px solid rgba(0,229,196,0.1)"><span style="font-size:0.78rem">Mark R. — "I want to invest in apartments"</span><span style="font-size:0.68rem;color:#3dff9b;background:rgba(61,255,155,0.1);padding:2px 8px;border-radius:4px">Demo Booked ✓</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB: VOICE AGENTS -->
+          <div id="dtab-voice" style="display:none">
+            <div class="dash-kpis">
+              <div class="kpi-card"><div class="kpi-label">Calls Today</div><div class="kpi-val blue">38</div><div class="kpi-badge">↑ Inbound + Outbound</div></div>
+              <div class="kpi-card"><div class="kpi-label">Avg Call Time</div><div class="kpi-val up">3m 42s</div><div class="kpi-badge">Natural flow</div></div>
+              <div class="kpi-card"><div class="kpi-label">Qualified by Voice</div><div class="kpi-val blue">21</div><div class="kpi-badge">55% rate</div></div>
+              <div class="kpi-card"><div class="kpi-label">Transferred to Agent</div><div class="kpi-val up">9</div><div class="kpi-badge warn">Hot prospects</div></div>
+            </div>
+            <div class="dash-card" style="margin-top:0">
+              <div class="dash-card-label">Live Call Log</div>
+              <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:8px;background:rgba(0,229,196,0.05);border-radius:8px;border:1px solid rgba(0,229,196,0.15)"><div><div style="font-size:0.78rem;font-weight:500">+971 50 123 4567</div><div style="font-size:0.68rem;color:var(--muted)">Inbound · 4m 12s · Viewing booked</div></div><span style="font-size:0.68rem;color:#3dff9b">Done ✓</span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:8px;background:rgba(108,75,255,0.05);border-radius:8px;border:1px solid rgba(108,75,255,0.15)"><div><div style="font-size:0.78rem;font-weight:500">+44 7911 123456</div><div style="font-size:0.68rem;color:var(--muted)">Outbound follow-up · 2m 58s</div></div><span style="font-size:0.68rem;color:var(--accent2)">Transferred</span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:8px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid var(--border)"><div><div style="font-size:0.78rem;font-weight:500">+1 212 555 0192</div><div style="font-size:0.68rem;color:var(--muted)">Inbound inquiry · 1m 30s</div></div><span style="font-size:0.68rem;color:var(--muted)">Nurture</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB: CRM SYNC -->
+          <div id="dtab-crm" style="display:none">
+            <div class="dash-kpis">
+              <div class="kpi-card"><div class="kpi-label">Records Synced</div><div class="kpi-val blue">1,247</div><div class="kpi-badge">↑ Auto-updated</div></div>
+              <div class="kpi-card"><div class="kpi-label">Last Sync</div><div class="kpi-val up">2s ago</div><div class="kpi-badge">Real-time</div></div>
+              <div class="kpi-card"><div class="kpi-label">Errors</div><div class="kpi-val blue">0</div><div class="kpi-badge">↑ Clean data</div></div>
+              <div class="kpi-card"><div class="kpi-label">Manual Entry Saved</div><div class="kpi-val up">22 hrs</div><div class="kpi-badge warn">This week</div></div>
+            </div>
+            <div class="dash-card" style="margin-top:0">
+              <div class="dash-card-label">Recent CRM Updates</div>
+              <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
+                <div style="display:flex;gap:10px;align-items:center"><div style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0"></div><div style="font-size:0.78rem">James Morrison → Stage updated to <span style="color:var(--accent)">Viewing Scheduled</span></div><div style="font-size:0.65rem;color:var(--muted);margin-left:auto">2m ago</div></div>
+                <div style="display:flex;gap:10px;align-items:center"><div style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0"></div><div style="font-size:0.78rem">Sara Lin → Note added: <span style="color:var(--muted)">Follow-up email sent by AI</span></div><div style="font-size:0.65rem;color:var(--muted);margin-left:auto">5m ago</div></div>
+                <div style="display:flex;gap:10px;align-items:center"><div style="width:6px;height:6px;border-radius:50%;background:#3dff9b;flex-shrink:0"></div><div style="font-size:0.78rem">Ahmed K. → <span style="color:#3dff9b">Property matched & sent</span> (3 listings)</div><div style="font-size:0.65rem;color:var(--muted);margin-left:auto">8m ago</div></div>
+                <div style="display:flex;gap:10px;align-items:center"><div style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0"></div><div style="font-size:0.78rem">New lead created from WhatsApp: <span style="color:var(--accent)">Fatima A.</span></div><div style="font-size:0.65rem;color:var(--muted);margin-left:auto">12m ago</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB: AUTOMATIONS -->
+          <div id="dtab-automations" style="display:none">
+            <div class="dash-kpis">
+              <div class="kpi-card"><div class="kpi-label">Active Workflows</div><div class="kpi-val blue">14</div><div class="kpi-badge">↑ Running 24/7</div></div>
+              <div class="kpi-card"><div class="kpi-label">Actions Today</div><div class="kpi-val up">847</div><div class="kpi-badge">Auto-executed</div></div>
+              <div class="kpi-card"><div class="kpi-label">Emails Sent</div><div class="kpi-val blue">312</div><div class="kpi-badge">↑ AI-personalised</div></div>
+              <div class="kpi-card"><div class="kpi-label">Time Saved</div><div class="kpi-val up">19 hrs</div><div class="kpi-badge warn">Today alone</div></div>
+            </div>
+            <div class="dash-card" style="margin-top:0">
+              <div class="dash-card-label">Active Automation Workflows</div>
+              <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:rgba(0,229,196,0.05);border-radius:8px;border:1px solid rgba(0,229,196,0.12)"><span style="font-size:0.78rem">New Lead → Instant AI Reply</span><span style="font-size:0.65rem;color:#3dff9b">● Active</span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:rgba(0,229,196,0.05);border-radius:8px;border:1px solid rgba(0,229,196,0.12)"><span style="font-size:0.78rem">Qualified Lead → Book Viewing</span><span style="font-size:0.65rem;color:#3dff9b">● Active</span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:rgba(0,229,196,0.05);border-radius:8px;border:1px solid rgba(0,229,196,0.12)"><span style="font-size:0.78rem">No-show → Reschedule Sequence</span><span style="font-size:0.65rem;color:#3dff9b">● Active</span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:rgba(0,229,196,0.05);border-radius:8px;border:1px solid rgba(0,229,196,0.12)"><span style="font-size:0.78rem">Cold Lead → 12-Touch Nurture</span><span style="font-size:0.65rem;color:#3dff9b">● Active</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB: REPORTS -->
+          <div id="dtab-reports" style="display:none">
+            <div class="dash-kpis">
+              <div class="kpi-card"><div class="kpi-label">This Month Revenue</div><div class="kpi-val up">$142k</div><div class="kpi-badge">↑ 38% vs last mo.</div></div>
+              <div class="kpi-card"><div class="kpi-label">Leads Generated</div><div class="kpi-val blue">714</div><div class="kpi-badge">↑ 3.4x baseline</div></div>
+              <div class="kpi-card"><div class="kpi-label">Deals Closed</div><div class="kpi-val up">27</div><div class="kpi-badge">↑ Best month</div></div>
+              <div class="kpi-card"><div class="kpi-label">ROI on AxioMerix</div><div class="kpi-val up">11.2x</div><div class="kpi-badge">↑ vs prev. system</div></div>
+            </div>
+            <div class="dash-card" style="margin-top:0">
+              <div class="dash-card-label">Monthly Performance — Last 6 Months</div>
+              <div class="pipeline-stages" style="height:90px;margin-top:8px">
+                <div style="display:flex;flex-direction:column;align-items:center;flex:1;gap:4px"><div class="bar" style="width:100%;height:48%;background:rgba(0,229,196,0.3);border-radius:4px 4px 0 0"></div><div style="font-size:0.6rem;color:var(--muted)">Mar</div></div>
+                <div style="display:flex;flex-direction:column;align-items:center;flex:1;gap:4px"><div class="bar" style="width:100%;height:58%;background:rgba(0,229,196,0.4);border-radius:4px 4px 0 0"></div><div style="font-size:0.6rem;color:var(--muted)">Apr</div></div>
+                <div style="display:flex;flex-direction:column;align-items:center;flex:1;gap:4px"><div class="bar" style="width:100%;height:65%;background:rgba(0,229,196,0.45);border-radius:4px 4px 0 0"></div><div style="font-size:0.6rem;color:var(--muted)">May</div></div>
+                <div style="display:flex;flex-direction:column;align-items:center;flex:1;gap:4px"><div class="bar" style="width:100%;height:72%;background:rgba(0,229,196,0.5);border-radius:4px 4px 0 0"></div><div style="font-size:0.6rem;color:var(--muted)">Jun</div></div>
+                <div style="display:flex;flex-direction:column;align-items:center;flex:1;gap:4px"><div class="bar" style="width:100%;height:82%;background:rgba(0,229,196,0.6);border-radius:4px 4px 0 0"></div><div style="font-size:0.6rem;color:var(--muted)">Jul</div></div>
+                <div style="display:flex;flex-direction:column;align-items:center;flex:1;gap:4px"><div class="bar" style="width:100%;height:100%;background:var(--accent);border-radius:4px 4px 0 0"></div><div style="font-size:0.6rem;color:var(--accent)">Aug</div></div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -938,8 +1021,8 @@ footer{
       <div class="stat-label">Average time to go live</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num"><span>$0</span></div>
-      <div class="stat-label">Setup or onboarding fee</div>
+      <div class="stat-num"><span>1×</span> Fee</div>
+      <div class="stat-label">One-time setup, no monthly charges</div>
     </div>
   </div>
 </div>
@@ -1348,12 +1431,38 @@ footer{
 
 <script>
 /* ─── SCROLL REVEAL ─── */
+/* ─── DASHBOARD TABS ─── */
+const dashTabs = ['overview','pipeline','chatbots','voice','crm','automations','reports'];
+function switchDashTab(tab) {
+  dashTabs.forEach(t => {
+    const panel = document.getElementById('dtab-' + t);
+    const nav = document.getElementById('dnav-' + t);
+    if(panel) panel.style.display = (t === tab) ? '' : 'none';
+    if(nav) {
+      nav.classList.toggle('active', t === tab);
+    }
+  });
+}
+
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if(e.isIntersecting) { e.target.classList.add('visible'); }
   });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* ─── SMOOTH SCROLL FIX (for all anchor links) ─── */
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', function(e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if(target) {
+      e.preventDefault();
+      const offset = 70; // nav height
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
 
 /* ─── NAV SCROLL ─── */
 window.addEventListener('scroll', () => {
